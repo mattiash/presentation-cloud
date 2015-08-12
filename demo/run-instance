@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -x
+
+inst_id=$(aws ec2 run-instances --image-id ami-accff2b1 --count 1 --instance-type t2.micro --key-name netinsight --security-groups launch-wizard-1 --query Instances[0].InstanceId --output text)
+
+aws ec2 wait instance-status-ok --instance-ids $inst_id
+
+ip=`aws ec2 describe-instances --instance-ids $inst_id --query 'Reservations[0].Instances[0].PublicIpAddress' --output text`
+
+ssh -o StrictHostKeyChecking=no ubuntu@$ip uname -a
+
+aws ec2 terminate-instances --instance-ids $inst_id --output text
