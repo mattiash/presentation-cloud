@@ -24,6 +24,7 @@ html
           li.hidden
           li Launch a (web) service without owning any servers
           li Rent compute / storage capacity to handle peaks
+          li Test in a clean environment
 
       section
         h2 Several different providers
@@ -59,15 +60,75 @@ html
           li From 1 vCPU / 1 GB
           li To 36 vCPU / 244 GB
           li Pay per hour
-          li Spin up a new server in "a minute"
+          li Spin up a new server in "a few minutes"
           li Stop it when you´re done
 
-      section
-        h1 No hardware!
+      section(style="background-image:url('https://grahamdunningcrystalworld.files.wordpress.com/2012/07/img_2163.jpg');background-size:cover")
+        h1(style="color:red") No hardware!
+
 
       section
         h1 Demo
         p Create ec2 instance via web
+
+      section
+        h1 Demo
+        p Create ec2 instance via cli
+        p 
+          a(href="https://aws.amazon.com/cli/") https://aws.amazon.com/cli/
+
+      section
+        h2 run-instance
+        pre
+          code.language-bash.
+            inst_id=$(aws ec2 run-instances \
+              --image-id ami-accff2b1 \
+              --count 1 --instance-type t2.micro \
+              --key-name netinsight \
+              --security-groups launch-wizard-1 \
+              --query Instances[0].InstanceId \
+              --output text)
+
+            aws ec2 wait instance-status-ok \
+              --instance-ids $inst_id
+
+      section
+        h2 run-instance
+        pre
+          code.language-bash.
+            ip=`aws ec2 describe-instances \
+              --instance-ids $inst_id \
+              --query \ 
+                'Reservations[0].Instances[0].PublicIpAddress' \
+              --output text`
+
+            scp -o StrictHostKeyChecking=no \
+              ./installer ubuntu@$ip:
+
+            ssh -o StrictHostKeyChecking=no ubuntu@$ip \
+              sudo ./installer
+
+      section
+        h2 run-instance
+        pre
+          code.language-bash.
+            aws ec2 terminate-instances \
+              --instance-ids $inst_id \
+              --output text
+
+      section
+        h2 installer
+        pre
+          code.language-bash.
+            apt-get update
+            apt-get install -y apache2
+            echo "Behold the power of the Cloud" \
+              > /var/www/html/index.html
+
+        p This script runs on the EC2 instance. 
+
+      section(style="background-image:url('http://www.aquo.com.es/wp-content/uploads/green-clean.jpg');background-size:cover")
+        h1(style="color:red") Clean environment every time!
 
       section
         h2 Pricing
@@ -143,5 +204,24 @@ html
             s3cmd ls s3://backup.holmlund.se
             echo test > test.txt
             s3cmd put test.txt s3://backup.holmlund.se/
+
+      section
+        h2 Networking in EC2
+        ul
+          li VPC - Virtual Private Cloud
+          li All instances belong to a VPC
+          li No firewall between instances in a VPC
+          li Private IP inside VPC
+          li Public IP forwarded to private IP
+
+      section
+        h1 Questions?
+
+      section
+        h2 Try it!
+        ul
+          li First 750 hours of t2.micro for free
+          li Protect your credentials!
+          li Don't forget to terminate instances
 
     script(src='build/build.js')

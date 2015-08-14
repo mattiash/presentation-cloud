@@ -1,6 +1,6 @@
-Make links everywhere clickable and make sure that they open in a specific window (target=...)
+# AWS Web EC2
 
-Run the demo with Mattias private aws account
+## Preparation
 
 AWS Login page
 
@@ -40,10 +40,13 @@ sudo apt-get install apache2
 Låt instansen köra vidare!
 
 
-# Command line example
+# aws cli
 
 
 brew install awscli
+
+Use two terminals side by side. Start ./run-instance in the right terminal
+
 
 ## Create AWS key & secret
 
@@ -57,18 +60,9 @@ aws configure
 
 ## Run instance
 
-aws ec2 run-instances --image-id ami-accff2b1 --count 1 --instance-type t2.micro --key-name netinsight --security-groups launch-wizard-1
+aws ec2 describe-instances
 
-aws ec2 describe-instances --instance-ids XXX
-
-Ta ip-adressen från instansen vi startade tidigare
-
-aws ec2 describe-instances --instance-ids YYY --query 'Reservations[0].Instances[0].PublicIpAddress'`
-
-aws ec2 wait instance-status-ok --instance-ids XXX
-
-ssh -o StrictHostKeyChecking=no ubuntu@$ip uname -a
-
+aws ec2 describe-instances --query Reservations[0].Instances[0].PublicIpAddress
 
 # S3 Demo
 
