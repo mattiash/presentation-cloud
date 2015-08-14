@@ -8,8 +8,11 @@
   </head>
   <body>
     <article>
-      <section>
-        <h1>The Cloud</h1>
+      <section class="title">
+        <h1>The Cloud</h1><img src="images/logo-net-insight.png" style="width:50%">
+        <p></p>
+        <p>Mattias Holmlund, 2015-08-27</p>
+        <p></p><a href="http://mattiash.github.io/presentation-cloud/">http://mattiash.github.io/presentation-cloud/</a>
       </section>
       <section>
         <h2>Use cases</h2>
@@ -44,7 +47,7 @@
         </ul>
       </section>
       <section>
-        <h2>Amazon Web Services - AWS</h2><img src="images/AWS-Services.png" style="height:100%;width:auto">
+        <h2>AWS</h2><img src="images/AWS-Services.png" style="height:100%;width:auto">
       </section>
       <section>
         <h2>Amazon EC2</h2>
@@ -62,45 +65,84 @@
         <h1>No hardware!</h1>
       </section>
       <section>
-        <h1>Demo Create ec2 instance via web</h1>
+        <h1>Demo</h1>
+        <p>Create ec2 instance via web</p>
       </section>
       <section>
-        <h1>EBS - Elastic Block Store</h1>
+        <h2>Pricing</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>vCPU</th>
+              <th>Mem</th>
+              <th>1h</th>
+              <th>1month</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>t2.micro</td>
+              <td>1</td>
+              <td>1 GB</td>
+              <td>0.12</td>
+              <td>106</td>
+            </tr>
+            <tr>
+              <td>m4.large</td>
+              <td>2</td>
+              <td>8 GB</td>
+              <td>1.20</td>
+              <td>1060</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Prices in SEK. 750 hours of free t2.micro when you sign up</p>
+      </section>
+      <section>
+        <h1>Storage</h1>
+      </section>
+      <section>
+        <h2>EBS - Elastic Block Store</h2>
         <ul>
-          <li></li>
+          <li>Exposed as a block device in linux</li>
+          <li>Use any filesystem</li>
+          <li>Use mdadm to raid them</li>
+          <li>Lifetime separate from containers</li>
+          <li>Can only be mounted on one instance at a time</li>
+          <li>Used for root disk by default</li>
         </ul>
-        <p>EBS, S3</p>
       </section>
       <section>
-        <h2>Syntax Highlighting</h2>
-        <h3>Powered by <a href="http://twitter.com/LeaVerou">Lea Verou</a>'s <a href="https://github.com/LeaVerou/prism">Prism</a></h3>
-        <pre><code class="language-javascript">bespoke.from('article', [
-  classes(),
-  keys(),
-  touch(),
-  bullets('li, .bullet')
-]);
+        <h2>S3 - Simple Storage Service</h2>
+        <ul>
+          <li>Object storage (files)</li>
+          <li>Store files up to 5TB in size</li>
+          <li>Accessible via http</li>
+          <li>Can control access</li>
+          <li>Can host websites</li>
+          <li>Used as storage for many public services<br>(Dropbox, Smugmug)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>S3 Cost</h2>
+        <ul>
+          <li>85 GB storage for a month, SEK 28</li>
+          <li>Charges for transfer as well</li>
+          <li>Prices go down</li>
+          <li>Stored 2*10<sup>12</sup> objects in 2013</li>
+        </ul>
+      </section>
+      <section>
+        <h1>S3 Demo</h1>
+      </section>
+      <section>
+        <h2>s3cmd</h2>
+        <pre><code class="language-bash">s3cmd ls
+s3cmd ls s3://backup.holmlund.se
+echo test > test.txt
+s3cmd put test.txt s3://backup.holmlund.se/
 </code></pre>
-      </section>
-      <section data-bespoke-hash="named-route">
-        <h2>Named Route</h2>
-        <h3>Powered by <a href="https://github.com/markdalgleish/bespoke-hash">bespoke-hash</a></h3>
-        <p>Look up! This route has been named with a <em>'data-bespoke-hash'</em> attribute.</p>
-      </section>
-      <section data-bespoke-backdrop="emphatic" class="emphatic-text">
-        <h2>Emphatic Slide!</h2>
-        <h3>Powered by <a href="https://github.com/markdalgleish/bespoke-backdrop">bespoke-backdrop</a></h3>
-      </section>
-      <section>
-        <h2 class="bullet">Just the beginning...</h2><br>
-        <ul>
-          <li>Edit <a href="http://jade-lang.com/">Jade</a> markup in <em>'src/index.jade'</em></li>
-          <li>Edit <a href="http://learnboost.github.io/stylus/">Stylus</a> styles in <em>'src/styles/main.styl'</em></li>
-          <li>Edit JavaScript in <em>'src/scripts/main.js'</em></li>
-        </ul><br>
-        <ul>
-          <li><strong>Enjoy! :)</strong><a href="http://twitter.com/markdalgleish"> -@markdalgleish</a></li>
-        </ul>
       </section>
     </article>
     <script src="build/build.js"></script>
