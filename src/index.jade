@@ -8,11 +8,14 @@ html
     link(rel='stylesheet', type='text/css', href='build/build.css')
 
   body
-
+ 
     article
-
-      section
+      section.title
         h1 The Cloud
+        img(src="images/logo-net-insight.png" style="width:50%")
+        p
+        p Mattias Holmlund, 2015-08-27
+        p
         a(href="http://mattiash.github.io/presentation-cloud/") http://mattiash.github.io/presentation-cloud/
 
       section
@@ -45,7 +48,7 @@ html
           li build their own networking gear
 
       section
-        h2 Amazon Web Services - AWS
+        h2 AWS
         img(src="images/AWS-Services.png", style="height:100%;width:auto")
 
       section
@@ -63,46 +66,82 @@ html
         h1 No hardware!
 
       section
-        h1 Demo Create ec2 instance via web
+        h1 Demo
+        p Create ec2 instance via web
 
       section
-        h1 EBS - Elastic Block Store
+        h2 Pricing
+
+        table
+          thead
+            tr
+              th Type
+              th vCPU
+              th Mem
+              th 1h
+              th 1month
+          tbody
+            tr
+              td t2.micro
+              td 1
+              td 1 GB
+              td 0.12
+              td 106
+            tr
+              td m4.large
+              td 2
+              td 8 GB
+              td 1.20
+              td 1060
+
+        p Prices in SEK. 750 hours of free t2.micro when you sign up
+
+      
+      section
+        h1 Storage
+
+      section
+        h2 EBS - Elastic Block Store
         ul
-          li
-        p EBS, S3
+          li Exposed as a block device in linux
+          li Use any filesystem
+          li Use mdadm to raid them
+          li Lifetime separate from containers
+          li Can only be mounted on one instance at a time
+          li Used for root disk by default
 
       section
-        h2 Syntax Highlighting
-        h3 Powered by <a href="http://twitter.com/LeaVerou">Lea Verou</a>'s <a href="https://github.com/LeaVerou/prism">Prism</a>
+        h2 S3 - Simple Storage Service
+        ul
+          li Object storage (files)
+          li Store files up to 5TB in size
+          li Accessible via http
+          li Can control access
+          li Can host websites
+          li Used as storage for many public services
+             br
+             |(Dropbox, Smugmug)
+
+      section
+        h2 S3 Cost
+        ul
+          li 85 GB storage for a month, SEK 28
+          li Charges for transfer as well
+          li Prices go down
+          li Stored 2*10
+             sup 12
+             |  objects in 2013
+
+      section
+        h1 S3 Demo
+
+      section
+        h2 s3cmd
         pre
-          code.language-javascript.
-            bespoke.from('article', [
-              classes(),
-              keys(),
-              touch(),
-              bullets('li, .bullet')
-            ]);
-
-      section(data-bespoke-hash='named-route')
-        h2 Named Route
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-hash">bespoke-hash</a>
-        p Look up! This route has been named with a <em>'data-bespoke-hash'</em> attribute.
-
-      section.emphatic-text(data-bespoke-backdrop='emphatic')
-        h2 Emphatic Slide!
-        h3 Powered by <a href="https://github.com/markdalgleish/bespoke-backdrop">bespoke-backdrop</a>
-
-      section
-        h2.bullet Just the beginning...
-        br
-        ul
-          li Edit <a href="http://jade-lang.com/">Jade</a> markup in <em>'src/index.jade'</em>
-          li Edit <a href="http://learnboost.github.io/stylus/">Stylus</a> styles in <em>'src/styles/main.styl'</em>
-          li Edit JavaScript in <em>'src/scripts/main.js'</em>
-        br
-        ul
-          li
-            strong Enjoy! :)
-            a(href='http://twitter.com/markdalgleish')  -@markdalgleish
+          code.language-bash.
+            s3cmd ls
+            s3cmd ls s3://backup.holmlund.se
+            echo test > test.txt
+            s3cmd put test.txt s3://backup.holmlund.se/
 
     script(src='build/build.js')

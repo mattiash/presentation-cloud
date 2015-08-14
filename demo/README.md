@@ -55,6 +55,8 @@ aws configure
 - Default region eu-central-1
 - Default output format json
 
+## Run instance
+
 aws ec2 run-instances --image-id ami-accff2b1 --count 1 --instance-type t2.micro --key-name netinsight --security-groups launch-wizard-1
 
 aws ec2 describe-instances --instance-ids XXX
@@ -65,8 +67,21 @@ aws ec2 describe-instances --instance-ids YYY --query 'Reservations[0].Instances
 
 aws ec2 wait instance-status-ok --instance-ids XXX
 
-
 ssh -o StrictHostKeyChecking=no ubuntu@$ip uname -a
+
+
+# S3 Demo
+
+Show bucket backup.holmlund.se i s3-webben.
+
+Can upload / download files via web
+
+host backup.holmlund.se - show output
+
+s3cmd ls
+s3cmd ls s3://backup.holmlund.se
+echo test > test.txt
+s3cmd put test.txt s3://backup.holmlund.se/
 
 
 

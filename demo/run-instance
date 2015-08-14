@@ -8,6 +8,8 @@ aws ec2 wait instance-status-ok --instance-ids $inst_id
 
 ip=`aws ec2 describe-instances --instance-ids $inst_id --query 'Reservations[0].Instances[0].PublicIpAddress' --output text`
 
-ssh -o StrictHostKeyChecking=no ubuntu@$ip uname -a
+scp -o StrictHostKeyChecking=no ./installer ubuntu@$ip:
 
-aws ec2 terminate-instances --instance-ids $inst_id --output text
+ssh -o StrictHostKeyChecking=no ubuntu@$ip sudo ./installer
+
+# aws ec2 terminate-instances --instance-ids $inst_id --output text
