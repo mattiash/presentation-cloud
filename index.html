@@ -20,6 +20,7 @@
           <li class="hidden"></li>
           <li>Launch a (web) service without owning any servers</li>
           <li>Rent compute / storage capacity to handle peaks</li>
+          <li>Test in a clean environment</li>
         </ul>
       </section>
       <section>
@@ -57,16 +58,69 @@
           <li>From 1 vCPU / 1 GB</li>
           <li>To 36 vCPU / 244 GB</li>
           <li>Pay per hour</li>
-          <li>Spin up a new server in "a minute"</li>
+          <li>Spin up a new server in "a few minutes"</li>
           <li>Stop it when you´re done</li>
         </ul>
       </section>
-      <section>
-        <h1>No hardware!</h1>
+      <section style="background-image:url('https://grahamdunningcrystalworld.files.wordpress.com/2012/07/img_2163.jpg');background-size:cover">
+        <h1 style="color:red">No hardware!</h1>
       </section>
       <section>
         <h1>Demo</h1>
         <p>Create ec2 instance via web</p>
+      </section>
+      <section>
+        <h1>Demo</h1>
+        <p>Create ec2 instance via cli</p>
+        <p><a href="https://aws.amazon.com/cli/">https://aws.amazon.com/cli/</a></p>
+      </section>
+      <section>
+        <h2>run-instance</h2>
+        <pre><code class="language-bash">inst_id=$(aws ec2 run-instances \
+  --image-id ami-accff2b1 \
+  --count 1 --instance-type t2.micro \
+  --key-name netinsight \
+  --security-groups launch-wizard-1 \
+  --query Instances[0].InstanceId \
+  --output text)
+  
+aws ec2 wait instance-status-ok \
+  --instance-ids $inst_id
+  </code></pre>
+      </section>
+      <section>
+        <h2>run-instance</h2>
+        <pre><code class="language-bash">ip=`aws ec2 describe-instances \
+  --instance-ids $inst_id \
+  --query \ 
+    'Reservations[0].Instances[0].PublicIpAddress' \
+  --output text`
+  
+scp -o StrictHostKeyChecking=no \
+  ./installer ubuntu@$ip:
+  
+ssh -o StrictHostKeyChecking=no ubuntu@$ip \
+  sudo ./installer
+  </code></pre>
+      </section>
+      <section>
+        <h2>run-instance</h2>
+        <pre><code class="language-bash">aws ec2 terminate-instances \
+  --instance-ids $inst_id \
+  --output text
+  </code></pre>
+      </section>
+      <section>
+        <h2>installer</h2>
+        <pre><code class="language-bash">apt-get update
+apt-get install -y apache2
+echo "Behold the power of the Cloud" \
+  > /var/www/html/index.html
+  </code></pre>
+        <p>This script runs on the EC2 instance. </p>
+      </section>
+      <section style="background-image:url('http://www.aquo.com.es/wp-content/uploads/green-clean.jpg');background-size:cover">
+        <h1 style="color:red">Clean environment every time!</h1>
       </section>
       <section>
         <h2>Pricing</h2>
@@ -143,6 +197,27 @@ s3cmd ls s3://backup.holmlund.se
 echo test > test.txt
 s3cmd put test.txt s3://backup.holmlund.se/
 </code></pre>
+      </section>
+      <section>
+        <h2>Networking in EC2</h2>
+        <ul>
+          <li>VPC - Virtual Private Cloud</li>
+          <li>All instances belong to a VPC</li>
+          <li>No firewall between instances in a VPC</li>
+          <li>Private IP inside VPC</li>
+          <li>Public IP forwarded to private IP</li>
+        </ul>
+      </section>
+      <section>
+        <h1>Questions?</h1>
+      </section>
+      <section>
+        <h2>Try it!</h2>
+        <ul>
+          <li>First 750 hours of t2.micro for free</li>
+          <li>Protect your credentials!</li>
+          <li>Don't forget to terminate instances</li>
+        </ul>
       </section>
     </article>
     <script src="build/build.js"></script>
