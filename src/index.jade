@@ -15,16 +15,19 @@ html
         img(src="images/logo-net-insight.png" style="width:50%")
         p
         p Mattias Holmlund, 2015-08-27
-        p
-        a(href="http://mattiash.github.io/presentation-cloud/") http://mattiash.github.io/presentation-cloud/
+
 
       section
         h2 Use cases
         ul.transition
           li.hidden
           li Launch a (web) service without owning any servers
+          li Start small and scale indefinitely
           li Rent compute / storage capacity to handle peaks
-          li Test in a clean environment
+          li Test in a clean environment.
+
+      section(style="background-image:url('https://grahamdunningcrystalworld.files.wordpress.com/2012/07/img_2163.jpg');background-size:cover")
+        h1(style="color:red") No hardware!
 
       section
         h2 Several different providers
@@ -39,11 +42,16 @@ html
       section
         h2 Amazon
         ul
-          li.hidden
-          li 28 availability zones across the globe
+          li 9 regions across the globe
+          li 28 availability zones
           li at least one datacenter per availability zone
           li 50k - 80k servers per datacenter
-          li 2-5 million servers
+          li
+            b 2-5 million servers
+
+      section
+        h2 Amazon
+        ul
           li build their own servers
           li private network with their own fiber links
           li build their own networking gear
@@ -56,20 +64,28 @@ html
         h2 Amazon EC2
         p Rent virtual servers
         ul
-          li.hidden
-          li From 1 vCPU / 1 GB
-          li To 36 vCPU / 244 GB
+          li From 1 vCPU / 1 GB RAM
+          li To 36 vCPU / 244 GB RAM
           li Pay per hour
           li Spin up a new server in "a few minutes"
           li Stop it when you´re done
 
-      section(style="background-image:url('https://grahamdunningcrystalworld.files.wordpress.com/2012/07/img_2163.jpg');background-size:cover")
-        h1(style="color:red") No hardware!
-
-
       section
         h1 Demo
         p Create ec2 instance via web
+
+      section
+        h2 Networking in EC2
+        ul
+          li VPC - Virtual Private Cloud
+          li All instances belong to a VPC
+          li No firewall between instances in a VPC
+          li Private IP inside VPC
+          li Public IP forwarded to private IP via firewall
+
+      section
+        h2 Networking in EC2
+        img(src="images/AWS-Firewall.png", style="height:auto;width:100%")
 
       section
         h1 Demo
@@ -96,11 +112,11 @@ html
         h2 run-instance
         pre
           code.language-bash.
-            ip=`aws ec2 describe-instances \
+            ip=$(aws ec2 describe-instances \
               --instance-ids $inst_id \
               --query \ 
                 'Reservations[0].Instances[0].PublicIpAddress' \
-              --output text`
+              --output text)
 
             scp -o StrictHostKeyChecking=no \
               ./installer ubuntu@$ip:
@@ -197,24 +213,6 @@ html
         h1 S3 Demo
 
       section
-        h2 s3cmd
-        pre
-          code.language-bash.
-            s3cmd ls
-            s3cmd ls s3://backup.holmlund.se
-            echo test > test.txt
-            s3cmd put test.txt s3://backup.holmlund.se/
-
-      section
-        h2 Networking in EC2
-        ul
-          li VPC - Virtual Private Cloud
-          li All instances belong to a VPC
-          li No firewall between instances in a VPC
-          li Private IP inside VPC
-          li Public IP forwarded to private IP
-
-      section
         h1 Questions?
 
       section
@@ -223,5 +221,7 @@ html
           li First 750 hours of t2.micro for free
           li Protect your credentials!
           li Don't forget to terminate instances
+        a(href="https://mattiash.github.io/presentation-cloud/") https://mattiash.github.io/presentation-cloud/
+        a(href="https://github.com/mattiash/presentation-cloud/") https://github.com/mattiash/presentation-cloud/
 
     script(src='build/build.js')

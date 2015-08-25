@@ -27,23 +27,23 @@ Select t2.micro, Review and Launch.
 
 Edit security groups, Open port 80
 
+The Security group shall be named launch-wizard-1 for the cli demo to work.
+
 Launch
 
 Main menu - Instances
+
+Show Networking-slide while the instance starts
 
 ssh ubuntu@...
 
 sudo apt-get update
 sudo apt-get install apache2
 
-
-Låt instansen köra vidare!
-
+Leave the instance running
 
 # aws cli
 
-
-brew install awscli
 
 Use two terminals side by side. Start ./run-instance in the right terminal
 

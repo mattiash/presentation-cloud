@@ -6,7 +6,7 @@ inst_id=$(aws ec2 run-instances --image-id ami-accff2b1 --count 1 --instance-typ
 
 aws ec2 wait instance-status-ok --instance-ids $inst_id
 
-ip=`aws ec2 describe-instances --instance-ids $inst_id --query 'Reservations[0].Instances[0].PublicIpAddress' --output text`
+ip=$(aws ec2 describe-instances --instance-ids $inst_id --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 
 scp -o StrictHostKeyChecking=no ./installer ubuntu@$ip:
 
