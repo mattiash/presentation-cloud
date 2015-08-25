@@ -12,16 +12,19 @@
         <h1>The Cloud</h1><img src="images/logo-net-insight.png" style="width:50%">
         <p></p>
         <p>Mattias Holmlund, 2015-08-27</p>
-        <p></p><a href="http://mattiash.github.io/presentation-cloud/">http://mattiash.github.io/presentation-cloud/</a>
       </section>
       <section>
         <h2>Use cases</h2>
         <ul class="transition">
           <li class="hidden"></li>
           <li>Launch a (web) service without owning any servers</li>
+          <li>Start small and scale indefinitely</li>
           <li>Rent compute / storage capacity to handle peaks</li>
-          <li>Test in a clean environment</li>
+          <li>Test in a clean environment.</li>
         </ul>
+      </section>
+      <section style="background-image:url('https://grahamdunningcrystalworld.files.wordpress.com/2012/07/img_2163.jpg');background-size:cover">
+        <h1 style="color:red">No hardware!</h1>
       </section>
       <section>
         <h2>Several different providers</h2>
@@ -37,11 +40,16 @@
       <section>
         <h2>Amazon</h2>
         <ul>
-          <li class="hidden"></li>
-          <li>28 availability zones across the globe</li>
+          <li>9 regions across the globe</li>
+          <li>28 availability zones</li>
           <li>at least one datacenter per availability zone</li>
           <li>50k - 80k servers per datacenter</li>
-          <li>2-5 million servers</li>
+          <li><b>2-5 million servers</b></li>
+        </ul>
+      </section>
+      <section>
+        <h2>Amazon</h2>
+        <ul>
           <li>build their own servers</li>
           <li>private network with their own fiber links</li>
           <li>build their own networking gear</li>
@@ -54,20 +62,29 @@
         <h2>Amazon EC2</h2>
         <p>Rent virtual servers</p>
         <ul>
-          <li class="hidden"></li>
-          <li>From 1 vCPU / 1 GB</li>
-          <li>To 36 vCPU / 244 GB</li>
+          <li>From 1 vCPU / 1 GB RAM</li>
+          <li>To 36 vCPU / 244 GB RAM</li>
           <li>Pay per hour</li>
           <li>Spin up a new server in "a few minutes"</li>
           <li>Stop it when you´re done</li>
         </ul>
       </section>
-      <section style="background-image:url('https://grahamdunningcrystalworld.files.wordpress.com/2012/07/img_2163.jpg');background-size:cover">
-        <h1 style="color:red">No hardware!</h1>
-      </section>
       <section>
         <h1>Demo</h1>
         <p>Create ec2 instance via web</p>
+      </section>
+      <section>
+        <h2>Networking in EC2</h2>
+        <ul>
+          <li>VPC - Virtual Private Cloud</li>
+          <li>All instances belong to a VPC</li>
+          <li>No firewall between instances in a VPC</li>
+          <li>Private IP inside VPC</li>
+          <li>Public IP forwarded to private IP via firewall</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Networking in EC2</h2><img src="images/AWS-Firewall.png" style="height:auto;width:100%">
       </section>
       <section>
         <h1>Demo</h1>
@@ -90,11 +107,11 @@ aws ec2 wait instance-status-ok \
       </section>
       <section>
         <h2>run-instance</h2>
-        <pre><code class="language-bash">ip=`aws ec2 describe-instances \
+        <pre><code class="language-bash">ip=$(aws ec2 describe-instances \
   --instance-ids $inst_id \
   --query \ 
     'Reservations[0].Instances[0].PublicIpAddress' \
-  --output text`
+  --output text)
   
 scp -o StrictHostKeyChecking=no \
   ./installer ubuntu@$ip:
@@ -191,24 +208,6 @@ echo "Behold the power of the Cloud" \
         <h1>S3 Demo</h1>
       </section>
       <section>
-        <h2>s3cmd</h2>
-        <pre><code class="language-bash">s3cmd ls
-s3cmd ls s3://backup.holmlund.se
-echo test > test.txt
-s3cmd put test.txt s3://backup.holmlund.se/
-</code></pre>
-      </section>
-      <section>
-        <h2>Networking in EC2</h2>
-        <ul>
-          <li>VPC - Virtual Private Cloud</li>
-          <li>All instances belong to a VPC</li>
-          <li>No firewall between instances in a VPC</li>
-          <li>Private IP inside VPC</li>
-          <li>Public IP forwarded to private IP</li>
-        </ul>
-      </section>
-      <section>
         <h1>Questions?</h1>
       </section>
       <section>
@@ -217,7 +216,7 @@ s3cmd put test.txt s3://backup.holmlund.se/
           <li>First 750 hours of t2.micro for free</li>
           <li>Protect your credentials!</li>
           <li>Don't forget to terminate instances</li>
-        </ul>
+        </ul><a href="https://mattiash.github.io/presentation-cloud/">https://mattiash.github.io/presentation-cloud/</a><a href="https://github.com/mattiash/presentation-cloud/">https://github.com/mattiash/presentation-cloud/</a>
       </section>
     </article>
     <script src="build/build.js"></script>
