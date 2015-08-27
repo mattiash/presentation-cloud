@@ -18,3 +18,12 @@ Same basic service
 
 Different APIs
 
+## Amazon
+
+Amazon is huge
+
+They know how to run servers
+
+## EC2
+
+1 vCPU is one hyperthread
